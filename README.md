@@ -7,4 +7,4 @@ ___
 
 ## Download
 
-To download app click [here]([https://pages.github.com/](https://github.com/quithe-exe/Time-Calculator/releases)).
+To download app click [here](https://github.com/quithe-exe/Time-Calculator/releases).
