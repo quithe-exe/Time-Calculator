@@ -1,4 +1,4 @@
-name: Build & Release Windows App
+name: Build & Release EXE
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
         run: |
           pyinstaller --onefile --windowed --icon=icon.ico app.py
 
-      - name: Rename outputs
+      - name: Rename EXE
         run: |
           move dist\\app.exe TimeCalculator.exe
 
@@ -35,15 +35,9 @@ jobs:
         with:
           name: "Time Calculator ${{ github.ref_name }}"
           body: |
-            🚀 New release!
+            🚀 Release ${{ github.ref_name }}
 
-            ## Features
-            - Modern UI
-            - Time calculations
-
-            ## Download
-            Download the .exe file from the release.
-          files: |
-            TimeCalculator.exe
+            Download the .exe below.
+          files: TimeCalculator.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
