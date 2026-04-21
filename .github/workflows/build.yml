@@ -1,8 +1,9 @@
-name: Build Windows App
+name: Build & Release Windows App
 
 on:
   push:
-    branches: ["master"]
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -25,22 +26,24 @@ jobs:
         run: |
           pyinstaller --onefile --windowed --icon=icon.ico app.py
 
-      - name: Install Inno Setup
+      - name: Rename outputs
         run: |
-          choco install innosetup -y
+          move dist\\app.exe TimeCalculator.exe
 
-      - name: Build Installer
-        run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
-
-      - name: Upload EXE
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: app-exe
-          path: dist/app.exe
+          name: "Time Calculator ${{ github.ref_name }}"
+          body: |
+            🚀 New release!
 
-      - name: Upload Installer
-        uses: actions/upload-artifact@v4
-        with:
-          name: installer
-          path: output/setup.exe
+            ## Features
+            - Modern UI
+            - Time calculations
+
+            ## Download
+            Download the .exe file from the release.
+          files: |
+            TimeCalculator.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
